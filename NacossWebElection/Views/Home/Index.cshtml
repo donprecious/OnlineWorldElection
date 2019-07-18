@@ -1,0 +1,257 @@
+﻿@model IEnumerable<NacossWebElection.Models.DBModel.Candidate>
+@{
+    ViewBag.Title = "Home Page";
+
+    var db = new NacossWebElection.Models.DBModel.NacossVotingDBEntities();
+    string user = null;
+    var q = db.VoteTimes.FirstOrDefault();
+    var StartdateTime = DateTime.UtcNow;
+    var StopdateTime = DateTime.UtcNow;
+    if (q != null)
+    {
+        StartdateTime = q.VoteTimeStart.Value;
+        StopdateTime = q.VoteTimeEnd.Value;
+    }
+
+    string[] date1 = StartdateTime.GetDateTimeFormats('f'), date2 = StopdateTime.GetDateTimeFormats('f');
+    if (Session["matNo"] != null)
+    {
+        user = Session["matNo"].ToString();
+    }
+}
+
+
+<div class="jumbotron gradient-fill">
+    <h1>Delta State Polytechnic Ozoro, Online Election</h1>
+    <p class="lead">Every student can now participate in election from any location with easy</p>
+    <p><a href="#" class="btn btn-primary">Vote Nacos Representatives now &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-heading"><h2>Current Elections</h2></li>
+            <li class="list-group-item"><a class="" href="#">Nigeria assocation of computer science student warri (NACOSS) &raquo;</a></li>
+            <li class="list-group-item"><a class="" href="#"> Science Labaratory Tecnology Student Representative (SLTR). &raquo;</a></li>
+            <li class="list-group-item"><a class="" href="#">Learn how to add your election to this list &raquo;</a></li>
+        </ul>
+        <p><a class="btn btn-default" href="#">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>How Easy to vote</h2>
+        <p>One problem students encounters on election is that they are not around when these election is conducted, maybe for the reason that
+        the election was conducted during semester break, or after semeter exams. and they must have traveled. 
+
+        </p>
+        <p>This platform is here to solve this problem, where student can vote at their comfort zone with stree of traveling back to school </p>
+        <a href="#" class="btn btn-lg">View the Steps to vote</a>
+    </div>
+    <div class="col-md-4">
+        <h2>Latest News</h2>
+        <p>No article now!</p>
+        <p>Get Involve and write some articles now</p>
+        <p><a class="btn btn-default" href="#">Learn how &raquo;</a></p>
+    </div>
+</div>
+<div>
+    <div class="row"  id="contestant">
+        <div class="col-md-4">
+            <h3>Aspirants for positions</h3>
+        </div>
+        <div class="col-md-8">
+            
+            <div class="eleTime pull-right"><h4>Voting Starts from @date1[0] to @date2[0]  </h4> <p id="demo"></p></div>
+        </div>
+        </div>
+</div>
+<div class="row">
+   
+    <div class="col-md-12">
+        <div>
+
+            <ul class="nav nav-pills">
+                @foreach (var p in db.Positions)
+                {
+                    <li role="presentation"><a href="#">@p.Position1</a></li>
+                }
+         
+            </ul>
+
+        </div>
+        @if (Session["matNo"] != null)
+        {
+            <div class="vote-name"> @Session["FirstName"].ToString()  @Session["LastName"].ToString(). You are ready to vote </div>
+        }
+        else
+        {
+            <div class="vote-name"> Their is no voter logged in now. Verify your details by logging in <a href="@Url.Action("verify","home")" class="btn btn-primary">Verify Now</a> </div>
+        }
+
+      
+        @if (Model != null)
+        {
+            foreach (var p in db.Positions)
+            {
+                <button onclick="PresFunction()" class="new"> @p.Position1 Election</button>
+                <div class="candi">
+                    <div class="flex-container">
+                       @foreach (var i in Model)
+                       {
+                           string formatedID = i.MatNo.Replace("/", "_");
+                           if (i.Position == p.PositionID)
+                           {
+                            <div class="flex-item">
+                                <div class="prfl">
+                                    <div class="image-container">
+                                        <img src="@Url.Content(i.PhotoUrl)" alt="John" class="img-responsive">
+                                    </div>
+                                  
+                                    <h1>@i.FirstName @i.LastName</h1>
+                                    <p class="prfltitle">@p.Position1</p>
+                                    <p>@i.Manifestor</p>
+                                   @*<p><a class="new"  data-canID="@i.MatNo" data-positionID ="@i.Position" data-voterID="@user" href="@Url.Action("vote","home", new { id= user, candidateID= i.MatNo, positionID = i.Position })">Vote </a></p>*@
+                                    <a class="new vote" data-formated-id="@formatedID" data-canID="@i.MatNo" data-positionID="@i.Position" data-voterID="@user" href="@Url.Action("vote","home", new { id= user, candidateID= i.MatNo, positionID = i.Position })">Vote <img src="~/Images/ajax/loader2.gif" class="hide-loader" id="img_@formatedID" width="20" height="20" /></a>
+
+                                </div>
+                            </div>
+                           }
+                       }
+                    </div>
+                </div>
+            }
+
+        }
+
+
+        <!--Sctripts -->
+
+    </div>
+
+</div>
+<div  id="result">
+    @Html.Action("VoteResult")
+</div>
+<div id="learnHow">
+
+</div>
+
+@section Styles{
+<link href="~/Content/voteDesign.css" rel="stylesheet" />
+
+    <style>
+        p#demo {
+            font-size: 2.0rem;
+            color: #134fb6;
+        }
+    </style>
+    }
+@section Scripts{
+    <script>
+function PresFunction() {
+    var x = document.getElementById("preshide");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+</script>
+
+
+<script>
+function VpFunction() {
+    var x = document.getElementById("vphide");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+</script>
+
+<script>
+function SecFunction() {
+    var x = document.getElementById("sechide");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+</script>
+
+<script src="~/Scripts/AppScripts/vote.js"></script>
+    }
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal-label">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModal-label">Notification  </h4>
+            </div>
+            <div class="modal-body">
+                <h2 id="msgText"></h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModal-label">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModal-label">Notification  </h4>
+            </div>
+            <div class="modal-body">
+                <h2 id="msgText1"></h2>
+                <a id="url" href="#">Verify Now </a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<p id="demo"></p>*@
+
+<script>
+    // Set the date we're counting down to
+    var date;
+    @if(date1 != null){
+        @: date = "@date1[0]";
+    }
+
+//var countDownDate = new Date("Sep 5, 2018 15:37:25").getTime();
+    var countDownDate = new Date(date).getTime()
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get todays date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now an the count down date
+    var distance = now - countDownDate ;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result in the element with id="demo"
+  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s ";
+  // If the count down is finished, write some text
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "Voting EXPIRED";
+  }
+}, 1000);
+</script>

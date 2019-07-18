@@ -1,0 +1,121 @@
+﻿@model NacossWebElection.Models.ViewModels.VoteDateTimeView
+@{
+    ViewBag.Title = "Date and time";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    @using (Html.BeginForm("AddDateTime", "admin", new { @id = string.Empty }, FormMethod.Post, new { id = "form1" }))
+    {
+                    @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+        <div class="form-center">
+            <h3>Create Date and time for Election</h3>
+            <div class="form-group">
+                <h4>Start Date</h4>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label>Day </label>
+                        @Html.TextBoxFor(a => a.day, new { @class = "form-control", type = "number", min = "1", max = "30", placeholder = "Day of Month" })
+                    </div>
+                    <div class="form-group">
+                        <label>Month</label>
+                        @Html.TextBoxFor(a => a.month, new { @class = "form-control", type = "number", min = "1", max = "12", placeholder = "Month" })
+                    </div>
+                    <div class="form-group">
+                        <label>Year</label>
+                        @Html.TextBoxFor(a => a.year, new { @class = "form-control", type = "number", placeholder = "Year" })
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <h5>Time</h5>
+                    <div class="form-group">
+                        <label>Hour</label>
+                        @Html.TextBoxFor(a => a.Hour, new { @class = "form-control", type = "number", min = "1", max = "12", placeholder = "Hour (12 hour)" })
+                    </div>
+
+                    <div class="form-group">
+                        <label>Minutes</label>
+                        @Html.TextBoxFor(a => a.minute, new { @class = "form-control", type = "number", min = "0", max = "59", placeholder = "Minutes (0 - 59)" })
+                    </div>
+
+                    <div class="form-group">
+                        <label>Day Time</label>
+                        @Html.DropDownListFor(model => model.period, new List<SelectListItem>{
+                         new SelectListItem{ Text="PM", Value="PM"},
+                         new SelectListItem{ Text="AM", Value="AM"}}, htmlAttributes: new { @class = "form-control" })
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <h4>End Date</h4>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label>Day </label>
+                        @Html.TextBoxFor(a => a.sday, new { @class = "form-control", type = "number", min = "1", max = "30", placeholder = "Day of Month" })
+                    </div>
+                    <div class="form-group">
+                        <label>Month</label>
+                        @Html.TextBoxFor(a => a.smonth, new { @class = "form-control", type = "number", min = "1", max = "12", placeholder = "Month" })
+                    </div>
+                    <div class="form-group">
+                        <label>Year</label>
+                        @Html.TextBoxFor(a => a.syear, new { @class = "form-control", type = "number", placeholder = "Year" })
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <h5>Time</h5>
+                    <div class="form-group">
+                        <label>Hour</label>
+                        @Html.TextBoxFor(a => a.sHour, new { @class = "form-control", type = "number", min = "1", max = "12", placeholder = "Hour (12 hour)" })
+                    </div>
+
+                    <div class="form-group">
+                        <label>Minutes</label>
+                        @Html.TextBoxFor(a => a.sminute, new { @class = "form-control", type = "number", min = "0", max = "59", placeholder = "Minutes (0 - 59)" })
+                    </div>
+
+                    <div class="form-group">
+                        <label>Day Time</label>
+                        @Html.DropDownListFor(model => model.speriod, new List<SelectListItem>{
+                         new SelectListItem{ Text="PM", Value="PM"},
+                         new SelectListItem{ Text="AM", Value="AM"}}, htmlAttributes: new { @class = "form-control" })
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-default"><i class="fa fa-clock-o"> </i> Change <img class="hide-loader" id="imgLoad" src="~/Images/ajax/LoadingCircle.gif" width="25" height="25" /> </button>
+            </div>
+        </div>
+    }
+  
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal-label">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModal-label">Notification</h4>
+            </div>
+            <div class="modal-body">
+                <h2 id="msgText"></h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/AppScripts/dateTime.js"></script>
+}

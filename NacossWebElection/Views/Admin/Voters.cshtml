@@ -1,0 +1,87 @@
+﻿@model IEnumerable<NacossWebElection.Models.DBModel.Voter>
+
+@{
+    ViewBag.Title = "Voters";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Voters</h2>
+
+<p>
+    @Html.ActionLink("addVoters", "Admin")
+</p>
+<table class="table">
+    <tr>
+        <th>
+           Matriculation Number
+        </th>
+        <th>
+            Vote ID
+        </th>
+        <th>
+          First Name
+        </th>
+        <th>
+          Last Name
+        </th>
+        <th>
+         Gender
+        </th>
+        <th>
+           Phone Number
+        </th>
+        <th>
+         Level
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Credentials
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    string formatedID = item.MatNo.Replace("/", "_");
+    <tr id="row_@formatedID"
+        >
+        <td>
+            @Html.DisplayFor(modelItem => item.MatNo)
+        </td>
+        <td>
+            @item.VoteID
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sex)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrentLevel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            <img class="img-thumbnail img-responsive" width="200" src="@item.VoterCredential" />
+        </td>
+        <td><a href="@Url.Action("EditVoters","Admin",new { id=@item.MatNo})" class="btn btn-xs btn-primary">Edit</a> | <a href="@Url.Action("DeleteVoter","Admin", new { id = item.MatNo })" data-formated-id="@formatedID" class="btn btn-xs btn-default delete">Delete <img src="~/Images/ajax/LoadingCircle.gif" class="hide-loader" id="img_@formatedID" width="20" height="20" /></a></td>
+
+    </tr>
+}
+
+</table>
+@section scripts{
+
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/AppScripts/Voter.js"></script>
+
+}

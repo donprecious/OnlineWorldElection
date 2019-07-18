@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title Nacoss Online Election</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/custom.css" rel="stylesheet" />
+    @RenderSection("Styles", required: false)
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Nacoss Dspz - Admin", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container">
+      
+       
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Dashboard</h1>
+            </div>
+         
+        </div> 
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-pills">
+                    <li role="presentation"><a href="@Url.Action( "index","admin")">Dashboard</a></li>
+                    <li role="presentation"><a href="@Url.Action( "AddCandidate","admin")">Add Candidate</a></li>
+                    <li role="presentation"><a href="@Url.Action( "Addvoters","admin")">Add Voters</a></li>
+                    <li role="presentation"><a href="@Url.Action( "voters","admin")">View Voters</a></li>
+                    <li role="presentation"><a href="@Url.Action( "position","admin")">Position</a></li>
+                    <li role="presentation"><a href="@Url.Action( "AddDateTime","admin")">Set Election Date <i class="fa-clock-o"> </i> </a></li>
+                </ul>
+                <div>
+                    @{ 
+                        var db = new NacossWebElection.Models.DBModel.NacossVotingDBEntities();
+                        var r = db.VoteTimes.FirstOrDefault();
+                        var StartdateTime = DateTime.UtcNow;
+                        var StopdateTime = DateTime.UtcNow;
+                        if (r != null) {
+                            StartdateTime = r.VoteTimeStart.Value;
+                            StopdateTime = r.VoteTimeEnd.Value;
+
+                        }
+                        string[] date1 = StartdateTime.GetDateTimeFormats('f'), date2 = StopdateTime.GetDateTimeFormats('f');
+                        }
+                    <h4>Election Date @date1[0] to @date2[0]  </h4>
+                </div>
+            </div>
+
+        </div> 
+      
+        <hr />
+        @RenderBody()
+        <footer>
+            <p>&copy; @DateTime.Now.Year -StackGip</p>
+            <p>@DateTime.UtcNow.ToLocalTime()</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+</body>
+</html>

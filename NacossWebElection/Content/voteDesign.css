@@ -1,0 +1,77 @@
+﻿
+/*profil card css*/
+.maincontainer {
+    max-width: 90%;
+    margin-left: 10%;
+}
+
+.prfl {
+    /* width:28%; */
+    width: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin:2px;
+    border:1px solid #808080;
+    text-align: center;
+    font-family: arial;
+    float: left;
+    margin-bottom:5px;
+    border-radius:5px;
+    
+}
+
+.prfltitle {
+    color: grey;
+    font-size: 18px;
+}
+
+button.new, a.new {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #3e6e96;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+    margin-top: 10px;
+    background: linear-gradient(-90deg, #b372f5, #9dadf7);
+}
+
+
+
+    button:hover, a:hover {
+        opacity: 0.7;
+    }
+.candi {
+    box-shadow: 1px 7px 8px 2px #c1bfbf;
+    padding:2px;
+    margin-top:5px;
+}
+
+.flex-container {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    width: 100%;
+   height:auto;
+
+}
+
+.flex-item {
+    width: 300px;
+    height: auto;
+    margin: 10px;
+    box-sizing:border-box;
+    margin-left:auto;
+    margin-right:auto;
+}
+.image-container {
+    margin: 10px;
+    border-radius: 10px;
+}
+.image-container img {
+    border-radius: 5px;
+}

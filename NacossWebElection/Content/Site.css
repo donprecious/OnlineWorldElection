@@ -1,0 +1,47 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 2px;
+
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.gradient-fill {
+    background: linear-gradient(-90deg, #cdccce, #96a8ab);
+}
+
+.footer {
+    background-color: #3e6e96;
+    color: white;
+   
+}
+footer{
+    padding: 20px;
+}
+
+.vote-name {
+    background-color: #c0c8f7;
+    padding: 10px;
+    padding-left: 20px;
+    color: #0e0e63;
+    margin: 10px;
+    font-size: 1.8rem;
+}

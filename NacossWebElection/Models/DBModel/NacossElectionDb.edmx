@@ -1,0 +1,748 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="NacossVotingDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Candidates">
+          <Key>
+            <PropertyRef Name="MatNo" />
+          </Key>
+          <Property Name="MatNo" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sex" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="10" />
+          <Property Name="Position" Type="int" Nullable="false" />
+          <Property Name="CurrentLevel" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Gpa" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Manifestor" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="phoneNo" Type="varchar" MaxLength="10" />
+          <Property Name="PhotoUrl" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="CandidateVoteCounts">
+          <Key>
+            <PropertyRef Name="CandidateMatNo" />
+          </Key>
+          <Property Name="CandidateMatNo" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="NoOfVotes" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CandidateVotes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="CandidateMatNo" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="VoterMatNo" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="positionID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Logins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Positions">
+          <Key>
+            <PropertyRef Name="PositionID" />
+          </Key>
+          <Property Name="PositionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Position1" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="DateStamp" Type="datetime" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Voters">
+          <Key>
+            <PropertyRef Name="MatNo" />
+          </Key>
+          <Property Name="MatNo" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sex" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="CurrentLevel" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="VoteID" Type="varchar" MaxLength="50" />
+          <Property Name="VoterCredential" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="VoteTimes">
+          <Key>
+            <PropertyRef Name="sn" />
+          </Key>
+          <Property Name="VoteTimeStart" Type="datetime" />
+          <Property Name="VoteTimeEnd" Type="datetime" />
+          <Property Name="sn" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Candidates_Positions">
+          <End Role="Positions" Type="Self.Positions" Multiplicity="1" />
+          <End Role="Candidates" Type="Self.Candidates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Positions">
+              <PropertyRef Name="PositionID" />
+            </Principal>
+            <Dependent Role="Candidates">
+              <PropertyRef Name="Position" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateVote_Candidates">
+          <End Role="Candidates" Type="Self.Candidates" Multiplicity="1" />
+          <End Role="CandidateVotes" Type="Self.CandidateVotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Candidates">
+              <PropertyRef Name="MatNo" />
+            </Principal>
+            <Dependent Role="CandidateVotes">
+              <PropertyRef Name="CandidateMatNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateVote_CandidateVoteCount">
+          <End Role="CandidateVoteCounts" Type="Self.CandidateVoteCounts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CandidateVotes" Type="Self.CandidateVotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CandidateVoteCounts">
+              <PropertyRef Name="CandidateMatNo" />
+            </Principal>
+            <Dependent Role="CandidateVotes">
+              <PropertyRef Name="CandidateMatNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateVote_Positions">
+          <End Role="Positions" Type="Self.Positions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CandidateVotes" Type="Self.CandidateVotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Positions">
+              <PropertyRef Name="PositionID" />
+            </Principal>
+            <Dependent Role="CandidateVotes">
+              <PropertyRef Name="positionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateVote_Voters">
+          <End Role="Voters" Type="Self.Voters" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CandidateVotes" Type="Self.CandidateVotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Voters">
+              <PropertyRef Name="MatNo" />
+            </Principal>
+            <Dependent Role="CandidateVotes">
+              <PropertyRef Name="VoterMatNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateVoteCount_Candidates">
+          <End Role="Candidates" Type="Self.Candidates" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CandidateVoteCounts" Type="Self.CandidateVoteCounts" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Candidates">
+              <PropertyRef Name="MatNo" />
+            </Principal>
+            <Dependent Role="CandidateVoteCounts">
+              <PropertyRef Name="CandidateMatNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Logins_dbo_Users_UserId">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Logins" Type="Self.Logins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Logins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UserClaims_dbo_Users_UserId">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserClaims" Type="Self.UserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRoles_Role">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRoles_User">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NacossVotingDBModelStoreContainer">
+          <EntitySet Name="Candidates" EntityType="Self.Candidates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CandidateVoteCounts" EntityType="Self.CandidateVoteCounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CandidateVotes" EntityType="Self.CandidateVotes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logins" EntityType="Self.Logins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Positions" EntityType="Self.Positions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserClaims" EntityType="Self.UserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Voters" EntityType="Self.Voters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VoteTimes" EntityType="Self.VoteTimes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Candidates_Positions" Association="Self.FK_Candidates_Positions">
+            <End Role="Positions" EntitySet="Positions" />
+            <End Role="Candidates" EntitySet="Candidates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateVote_Candidates" Association="Self.FK_CandidateVote_Candidates">
+            <End Role="Candidates" EntitySet="Candidates" />
+            <End Role="CandidateVotes" EntitySet="CandidateVotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateVote_CandidateVoteCount" Association="Self.FK_CandidateVote_CandidateVoteCount">
+            <End Role="CandidateVoteCounts" EntitySet="CandidateVoteCounts" />
+            <End Role="CandidateVotes" EntitySet="CandidateVotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateVote_Positions" Association="Self.FK_CandidateVote_Positions">
+            <End Role="Positions" EntitySet="Positions" />
+            <End Role="CandidateVotes" EntitySet="CandidateVotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateVote_Voters" Association="Self.FK_CandidateVote_Voters">
+            <End Role="Voters" EntitySet="Voters" />
+            <End Role="CandidateVotes" EntitySet="CandidateVotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateVoteCount_Candidates" Association="Self.FK_CandidateVoteCount_Candidates">
+            <End Role="Candidates" EntitySet="Candidates" />
+            <End Role="CandidateVoteCounts" EntitySet="CandidateVoteCounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Logins_dbo_Users_UserId" Association="Self.FK_dbo_Logins_dbo_Users_UserId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Logins" EntitySet="Logins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UserClaims_dbo_Users_UserId" Association="Self.FK_dbo_UserClaims_dbo_Users_UserId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserClaims" EntitySet="UserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRoles_Role" Association="Self.FK_UserRoles_Role">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRoles_User" Association="Self.FK_UserRoles_User">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NacossVotingDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="NacossVotingDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Candidates" EntityType="NacossVotingDBModel.Candidate" />
+          <EntitySet Name="CandidateVoteCounts" EntityType="NacossVotingDBModel.CandidateVoteCount" />
+          <EntitySet Name="CandidateVotes" EntityType="NacossVotingDBModel.CandidateVote" />
+          <EntitySet Name="Logins" EntityType="NacossVotingDBModel.Login" />
+          <EntitySet Name="Positions" EntityType="NacossVotingDBModel.Position" />
+          <EntitySet Name="Roles" EntityType="NacossVotingDBModel.Role" />
+          <EntitySet Name="UserClaims" EntityType="NacossVotingDBModel.UserClaim" />
+          <EntitySet Name="Users" EntityType="NacossVotingDBModel.User" />
+          <EntitySet Name="Voters" EntityType="NacossVotingDBModel.Voter" />
+          <EntitySet Name="VoteTimes" EntityType="NacossVotingDBModel.VoteTime" />
+          <AssociationSet Name="FK_Candidates_Positions" Association="NacossVotingDBModel.FK_Candidates_Positions">
+            <End Role="Position" EntitySet="Positions" />
+            <End Role="Candidate" EntitySet="Candidates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateVote_Candidates" Association="NacossVotingDBModel.FK_CandidateVote_Candidates">
+            <End Role="Candidate" EntitySet="Candidates" />
+            <End Role="CandidateVote" EntitySet="CandidateVotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateVoteCount_Candidates" Association="NacossVotingDBModel.FK_CandidateVoteCount_Candidates">
+            <End Role="Candidate" EntitySet="Candidates" />
+            <End Role="CandidateVoteCount" EntitySet="CandidateVoteCounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateVote_CandidateVoteCount" Association="NacossVotingDBModel.FK_CandidateVote_CandidateVoteCount">
+            <End Role="CandidateVoteCount" EntitySet="CandidateVoteCounts" />
+            <End Role="CandidateVote" EntitySet="CandidateVotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateVote_Positions" Association="NacossVotingDBModel.FK_CandidateVote_Positions">
+            <End Role="Position" EntitySet="Positions" />
+            <End Role="CandidateVote" EntitySet="CandidateVotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateVote_Voters" Association="NacossVotingDBModel.FK_CandidateVote_Voters">
+            <End Role="Voter" EntitySet="Voters" />
+            <End Role="CandidateVote" EntitySet="CandidateVotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Logins_dbo_Users_UserId" Association="NacossVotingDBModel.FK_dbo_Logins_dbo_Users_UserId">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Login" EntitySet="Logins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UserClaims_dbo_Users_UserId" Association="NacossVotingDBModel.FK_dbo_UserClaims_dbo_Users_UserId">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserClaim" EntitySet="UserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="UserRoles" Association="NacossVotingDBModel.UserRoles">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Candidate">
+          <Key>
+            <PropertyRef Name="MatNo" />
+          </Key>
+          <Property Name="MatNo" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Sex" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Position" Type="Int32" Nullable="false" />
+          <Property Name="CurrentLevel" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Gpa" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Manifestor" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="phoneNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PhotoUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Position1" Relationship="NacossVotingDBModel.FK_Candidates_Positions" FromRole="Candidate" ToRole="Position" />
+          <NavigationProperty Name="CandidateVotes" Relationship="NacossVotingDBModel.FK_CandidateVote_Candidates" FromRole="Candidate" ToRole="CandidateVote" />
+          <NavigationProperty Name="CandidateVoteCount" Relationship="NacossVotingDBModel.FK_CandidateVoteCount_Candidates" FromRole="Candidate" ToRole="CandidateVoteCount" />
+        </EntityType>
+        <EntityType Name="CandidateVoteCount">
+          <Key>
+            <PropertyRef Name="CandidateMatNo" />
+          </Key>
+          <Property Name="CandidateMatNo" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="NoOfVotes" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Candidate" Relationship="NacossVotingDBModel.FK_CandidateVoteCount_Candidates" FromRole="CandidateVoteCount" ToRole="Candidate" />
+          <NavigationProperty Name="CandidateVotes" Relationship="NacossVotingDBModel.FK_CandidateVote_CandidateVoteCount" FromRole="CandidateVoteCount" ToRole="CandidateVote" />
+        </EntityType>
+        <EntityType Name="CandidateVote">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="CandidateMatNo" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="VoterMatNo" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="positionID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Candidate" Relationship="NacossVotingDBModel.FK_CandidateVote_Candidates" FromRole="CandidateVote" ToRole="Candidate" />
+          <NavigationProperty Name="CandidateVoteCount" Relationship="NacossVotingDBModel.FK_CandidateVote_CandidateVoteCount" FromRole="CandidateVote" ToRole="CandidateVoteCount" />
+          <NavigationProperty Name="Position" Relationship="NacossVotingDBModel.FK_CandidateVote_Positions" FromRole="CandidateVote" ToRole="Position" />
+          <NavigationProperty Name="Voter" Relationship="NacossVotingDBModel.FK_CandidateVote_Voters" FromRole="CandidateVote" ToRole="Voter" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="NacossVotingDBModel.FK_dbo_Logins_dbo_Users_UserId" FromRole="Login" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Position">
+          <Key>
+            <PropertyRef Name="PositionID" />
+          </Key>
+          <Property Name="PositionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Position1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Candidates" Relationship="NacossVotingDBModel.FK_Candidates_Positions" FromRole="Position" ToRole="Candidate" />
+          <NavigationProperty Name="CandidateVotes" Relationship="NacossVotingDBModel.FK_CandidateVote_Positions" FromRole="Position" ToRole="CandidateVote" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="NacossVotingDBModel.UserRoles" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="UserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="NacossVotingDBModel.FK_dbo_UserClaims_dbo_Users_UserId" FromRole="UserClaim" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateStamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Logins" Relationship="NacossVotingDBModel.FK_dbo_Logins_dbo_Users_UserId" FromRole="User" ToRole="Login" />
+          <NavigationProperty Name="UserClaims" Relationship="NacossVotingDBModel.FK_dbo_UserClaims_dbo_Users_UserId" FromRole="User" ToRole="UserClaim" />
+          <NavigationProperty Name="Roles" Relationship="NacossVotingDBModel.UserRoles" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="Voter">
+          <Key>
+            <PropertyRef Name="MatNo" />
+          </Key>
+          <Property Name="MatNo" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Sex" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentLevel" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VoteID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VoterCredential" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CandidateVotes" Relationship="NacossVotingDBModel.FK_CandidateVote_Voters" FromRole="Voter" ToRole="CandidateVote" />
+        </EntityType>
+        <EntityType Name="VoteTime">
+          <Key>
+            <PropertyRef Name="sn" />
+          </Key>
+          <Property Name="VoteTimeStart" Type="DateTime" Precision="3" />
+          <Property Name="VoteTimeEnd" Type="DateTime" Precision="3" />
+          <Property Name="sn" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <Association Name="FK_Candidates_Positions">
+          <End Type="NacossVotingDBModel.Position" Role="Position" Multiplicity="1" />
+          <End Type="NacossVotingDBModel.Candidate" Role="Candidate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="PositionID" />
+            </Principal>
+            <Dependent Role="Candidate">
+              <PropertyRef Name="Position" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateVote_Candidates">
+          <End Type="NacossVotingDBModel.Candidate" Role="Candidate" Multiplicity="1" />
+          <End Type="NacossVotingDBModel.CandidateVote" Role="CandidateVote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Candidate">
+              <PropertyRef Name="MatNo" />
+            </Principal>
+            <Dependent Role="CandidateVote">
+              <PropertyRef Name="CandidateMatNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateVoteCount_Candidates">
+          <End Type="NacossVotingDBModel.Candidate" Role="Candidate" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="NacossVotingDBModel.CandidateVoteCount" Role="CandidateVoteCount" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Candidate">
+              <PropertyRef Name="MatNo" />
+            </Principal>
+            <Dependent Role="CandidateVoteCount">
+              <PropertyRef Name="CandidateMatNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateVote_CandidateVoteCount">
+          <End Type="NacossVotingDBModel.CandidateVoteCount" Role="CandidateVoteCount" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="NacossVotingDBModel.CandidateVote" Role="CandidateVote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CandidateVoteCount">
+              <PropertyRef Name="CandidateMatNo" />
+            </Principal>
+            <Dependent Role="CandidateVote">
+              <PropertyRef Name="CandidateMatNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateVote_Positions">
+          <End Type="NacossVotingDBModel.Position" Role="Position" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="NacossVotingDBModel.CandidateVote" Role="CandidateVote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="PositionID" />
+            </Principal>
+            <Dependent Role="CandidateVote">
+              <PropertyRef Name="positionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateVote_Voters">
+          <End Type="NacossVotingDBModel.Voter" Role="Voter" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="NacossVotingDBModel.CandidateVote" Role="CandidateVote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Voter">
+              <PropertyRef Name="MatNo" />
+            </Principal>
+            <Dependent Role="CandidateVote">
+              <PropertyRef Name="VoterMatNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Logins_dbo_Users_UserId">
+          <End Type="NacossVotingDBModel.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="NacossVotingDBModel.Login" Role="Login" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Login">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UserClaims_dbo_Users_UserId">
+          <End Type="NacossVotingDBModel.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="NacossVotingDBModel.UserClaim" Role="UserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserRoles">
+          <End Type="NacossVotingDBModel.Role" Role="Role" Multiplicity="*" />
+          <End Type="NacossVotingDBModel.User" Role="User" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="NacossVotingDBModelStoreContainer" CdmEntityContainer="NacossVotingDBEntities">
+          <EntitySetMapping Name="Candidates">
+            <EntityTypeMapping TypeName="NacossVotingDBModel.Candidate">
+              <MappingFragment StoreEntitySet="Candidates">
+                <ScalarProperty Name="PhotoUrl" ColumnName="PhotoUrl" />
+                <ScalarProperty Name="phoneNo" ColumnName="phoneNo" />
+                <ScalarProperty Name="Manifestor" ColumnName="Manifestor" />
+                <ScalarProperty Name="Gpa" ColumnName="Gpa" />
+                <ScalarProperty Name="CurrentLevel" ColumnName="CurrentLevel" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MatNo" ColumnName="MatNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CandidateVoteCounts">
+            <EntityTypeMapping TypeName="NacossVotingDBModel.CandidateVoteCount">
+              <MappingFragment StoreEntitySet="CandidateVoteCounts">
+                <ScalarProperty Name="NoOfVotes" ColumnName="NoOfVotes" />
+                <ScalarProperty Name="CandidateMatNo" ColumnName="CandidateMatNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CandidateVotes">
+            <EntityTypeMapping TypeName="NacossVotingDBModel.CandidateVote">
+              <MappingFragment StoreEntitySet="CandidateVotes">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="positionID" ColumnName="positionID" />
+                <ScalarProperty Name="VoterMatNo" ColumnName="VoterMatNo" />
+                <ScalarProperty Name="CandidateMatNo" ColumnName="CandidateMatNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logins">
+            <EntityTypeMapping TypeName="NacossVotingDBModel.Login">
+              <MappingFragment StoreEntitySet="Logins">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Positions">
+            <EntityTypeMapping TypeName="NacossVotingDBModel.Position">
+              <MappingFragment StoreEntitySet="Positions">
+                <ScalarProperty Name="Position1" ColumnName="Position1" />
+                <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="NacossVotingDBModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserClaims">
+            <EntityTypeMapping TypeName="NacossVotingDBModel.UserClaim">
+              <MappingFragment StoreEntitySet="UserClaims">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="NacossVotingDBModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DateStamp" ColumnName="DateStamp" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Voters">
+            <EntityTypeMapping TypeName="NacossVotingDBModel.Voter">
+              <MappingFragment StoreEntitySet="Voters">
+                <ScalarProperty Name="VoterCredential" ColumnName="VoterCredential" />
+                <ScalarProperty Name="VoteID" ColumnName="VoteID" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="CurrentLevel" ColumnName="CurrentLevel" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MatNo" ColumnName="MatNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VoteTimes">
+            <EntityTypeMapping TypeName="NacossVotingDBModel.VoteTime">
+              <MappingFragment StoreEntitySet="VoteTimes">
+                <ScalarProperty Name="sn" ColumnName="sn" />
+                <ScalarProperty Name="VoteTimeEnd" ColumnName="VoteTimeEnd" />
+                <ScalarProperty Name="VoteTimeStart" ColumnName="VoteTimeStart" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="UserRoles" TypeName="NacossVotingDBModel.UserRoles" StoreEntitySet="UserRoles">
+            <EndProperty Name="User">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="Role">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

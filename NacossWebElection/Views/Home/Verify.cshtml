@@ -1,0 +1,108 @@
+﻿@model NacossWebElection.Models.ViewModels.VerifyDetails
+
+@{
+    ViewBag.Title = "Verify";
+
+}
+<h2>Verify who you are</h2>
+<div class="well-sm well">
+
+   <form action="/home/verify" method="get">
+       <h4>Verify with your voter ID</h4>
+       <div class="form-group">
+           <input type="text" class="form-control input-group-btn" name="voteID" id="voteID" />
+           <button class="btn btn-info" type="submit">Check my Detail</button>
+       </div>
+   </form>
+   
+
+</div>
+<hr /> OR 
+By Verifying your details
+@using (Html.BeginForm("verify", "home", new { @id = string.Empty }, FormMethod.Post, new { id = "form1" })) 
+{
+    @Html.AntiForgeryToken()
+    <div class="form-center">
+        <h4>Enter Your Details to verify who you are!</h4>
+        <hr />
+        <div id="myAlert" class="hide-loader">
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 id="alertText"></h4>
+                @Html.ValidationSummary()
+            </div>
+        </div>
+    
+        <div class="form-group">
+            @Html.LabelFor(model => model.matno, htmlAttributes: new { @class = "control-label " })
+            
+                @Html.EditorFor(model => model.matno, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.matno, "", new { @class = "text-danger" })
+    
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label " })
+            
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+            
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label " })
+            
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+            
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label " })
+            
+                @Html.EditorFor(model => model.PhoneNo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
+            
+        </div>
+
+        <div class="form-group">
+            
+                <button type="submit" id="btnSubmit" class="btn " > Check Me! <img class="hide-loader" id="imgLoad" src="~/Images/ajax/LoadingCircle.gif" width="25" height="25" /> </button>
+           
+        </div>
+    </div>
+}
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal-label">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModal-label">Notification</h4>
+            </div>
+            <div class="modal-body">
+                <h2 id="msgText"></h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <a href="@Url.Action("index","home")" class="btn btn-success" >Start Voting</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var a;
+    @if (TempData["value"] != null) {
+        @: a = @TempData["value"];
+    }
+
+    if (a === 1){
+        $("#msgText").text("Verify Your Matriculation number before you can vote");
+        $("#myModal").modal("show");
+    }
+</script>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script src="~/Scripts/AppScripts/verifyVoter.js"></script>
+}

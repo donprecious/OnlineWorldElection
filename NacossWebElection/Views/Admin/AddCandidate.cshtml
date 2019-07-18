@@ -1,0 +1,156 @@
+﻿@model NacossWebElection.Models.ViewModels.Candidates
+@using NacossWebElection.Models
+@{
+
+    ViewBag.Title = "AddCandidate";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var db = new NacossWebElection.Models.DBModel.NacossVotingDBEntities();
+    var pos = db.Positions.ToList();
+    SelectList list1 = new SelectList(pos, "PositionID", "Position1");
+}
+
+<div class="row">
+    <div class="col-md-5">
+        <h2>Add Candidate</h2>
+        <div class="form-default">
+            <h4>Candidate</h4>
+        
+            @using (Html.BeginForm("AddCandidate", "admin", new { @id = string.Empty }, FormMethod.Post, new { id = "form1" }))
+            {
+                <div id="myAlert" class="hide-loader">
+                    <div class="alert alert-warning alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 id="alertText"></h4>
+                        @Html.ValidationSummary()
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MatNo, htmlAttributes: new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.MatNo, new {  @class = "form-control", placeholder = " Matriculation number" , value="DSPZ/SST/17/"} )
+                    @Html.ValidationMessageFor(model => model.MatNo, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First name" } })
+                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last name" } })
+                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.Sex, new List<SelectListItem>{
+                         new SelectListItem{ Text="Male", Value="Male"},
+                         new SelectListItem{ Text="Female", Value="Female"}}, htmlAttributes: new { @class = "form-control" })
+                    @*@Html.EditorFor(model => model.Sex, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.ValidationMessageFor(model => model.Sex, "", new { @class = "text-danger" })
+                </div >
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PositionID, htmlAttributes: new { @class = "control-label" })
+                    @*@Html.DropDownListFor(m=> m.PositionID, Model.Positions, htmlAttributes: new { @class = "form-control" })*@
+                    @Html.DropDownListFor(m => m.PositionID, list1 , htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.PositionID, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CurrentLevel, htmlAttributes: new { @class = "control-label" })
+                  @Html.DropDownListFor(model => model.CurrentLevel, new List<SelectListItem>{
+                         new SelectListItem{ Text="HND1", Value="HND1"},
+                         new SelectListItem{ Text="ND1", Value="ND1"}}, htmlAttributes: new { @class= "form-control" })
+                    @*@Html.EditorFor(model => model.CurrentLevel, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.ValidationMessageFor(model => model.CurrentLevel, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Gpa, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Gpa, new { htmlAttributes = new { @class = "form-control", placeholder = "Current GPA e.g = 2.5" } })
+                    @Html.ValidationMessageFor(model => model.Gpa, "", new { @class = "text-danger" })
+
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Manifestor, htmlAttributes: new { @class = "control-label" })
+                    @Html.TextAreaFor(model => model.Manifestor, new { @class = "form-control", placeholder = "Give Brief Manifestor" } )
+                    @Html.ValidationMessageFor(model => model.Manifestor, "", new { @class = "text-danger" })
+
+                </div>
+
+                @*<div class="form-group">
+                    <label for="file_photo">Upload a photo</label>
+                    <input type="file" class="item-img file center-block form-control" name="file_photo" />
+                    <img src="" class="gambar img-responsive img-thumbnail" id="item-img-output" />
+                </div>*@
+                <div class="form-group">
+                    <button type="submit"  id="btnSubmit"  class="btn btn-primary">
+                        Add <img class="hide-loader" id="imgLoad" src="~/Images/ajax/LoadingCircle.gif" width="25" height="25" />
+                    </button>
+                </div>
+            }
+
+        </div>
+    </div>
+    <div class="col-md-7">
+        @Html.Action("candidateList")
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal-label">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModal-label">Notification</h4>
+            </div>
+            <div class="modal-body">
+                <h2 id="msgText"></h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <a href="" class="btn btn-success" id="UploadNext">Upload Picture</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="cropImagePop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <div id="upload-demo" class="center-block"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="cropImageBtn" class="btn btn-primary">Crop</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    <link href="~/css/croppie.css" rel="stylesheet" />
+    <style>
+        #upload-demo {
+            width: 400px;
+            height: 400px;
+            padding-bottom: 25px;
+        }
+    </style>
+    }
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script src="~/Scripts/AppScripts/Candidate.js"></script>
+<script src="~/Scripts/croppie.min.js"></script>
+<script src="~/Scripts/AppScripts/ImageUpload.js"></script>
+}

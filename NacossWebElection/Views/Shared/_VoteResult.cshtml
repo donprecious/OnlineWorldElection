@@ -1,0 +1,82 @@
+﻿@model IEnumerable<NacossWebElection.Models.DBModel.CandidateVoteCount>
+@{ 
+    var db = new NacossWebElection.Models.DBModel.NacossVotingDBEntities();
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h2> <i class="fa fa-bell"> </i> Top 2 Winners  </h2>
+
+        @foreach (var p in db.Positions)
+            {
+
+            <div class="topviewers">
+
+                <h3>@p.Position1</h3>
+                @if (Model == null)
+                {
+
+                }
+
+                @foreach (var a in Model)
+                {
+
+                    if (a.Candidate.Position1.Position1 == p.Position1)
+                    {
+                        <div class="candi-view">
+                <div class="row">
+                    <div class="col-sm-6"><p>@a.Candidate.FirstName @a.Candidate.LastName</p></div>
+                    <div class="col-sm-6"><span>@a.NoOfVotes votes</span></div>
+                    </div>   </div>
+                    }
+
+
+                }
+            </div>
+        }
+
+
+    </div>
+    <div class="col-md-6">
+        <h2><i class="fa-list"></i> Result  Board</h2>
+        <div class="scroll-table">
+
+            <table class="table table-responsive table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th>Position</th>
+                        <th>Candidate</th>
+                        <th>Number of votes</th>
+                        
+                    </tr>
+                    @if (Model != null)
+                    {
+                        foreach (var i in Model)
+                        {
+                            <tr colspan="4">
+                                <td>@i.Candidate.Position1.Position1</td>
+                                <td>@i.Candidate.FirstName @i.Candidate.LastName</td>
+                                <td>@i.NoOfVotes.ToString()</td>
+                           
+                            </tr>
+                        }
+
+                    }
+                    else
+                    {
+                        <tr colspan="4">
+                            <td>No Result found</td>
+                        </tr>
+                    }
+
+                </thead>
+            </table>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+

@@ -1,0 +1,98 @@
+﻿@model IEnumerable<NacossWebElection.Models.DBModel.Candidate>
+
+@{
+    ViewBag.Title = "Candidates";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Candidates</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table" id="tbl_candidate">
+    <tr>
+        <th>
+           Matriculation Number
+        </th>
+        <th>
+           First Name
+        </th>
+        <th>
+        LastName
+        </th>
+        <th>
+           Gender
+        </th>
+        <th>
+       Email
+        </th>
+        <th>
+          Poistion
+        </th>
+        <th>
+          Level
+        </th>
+        <th>
+          Gpa
+        </th>
+        <th>
+          Manifestor
+        </th>
+        <th>
+          Phone Number
+        </th>
+        <th></th>
+    </tr>
+    @{ var db = new NacossWebElection.Models.DBModel.NacossVotingDBEntities();
+
+            }
+@foreach (var item in Model)
+{
+    string formatedID = item.MatNo.Replace("/", "_");
+
+    <tr id="row_@formatedID">
+        <td>
+            @Html.DisplayFor(modelItem => item.MatNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sex)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+           
+            @{ var r = db.Positions.Where(a => a.PositionID == item.Position).Select(a => a.Position1).SingleOrDefault().ToString();
+            }
+            @r
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrentLevel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gpa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Manifestor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.phoneNo)
+        </td>
+        <td>
+            <a class="btn btn-primary btn-xs" href="@Url.Action("EditCandidate", "Admin", new { id=item.MatNo })">Edit</a>|<a href="@Url.Action("DeleteCandidate","Admin", new { id = item.MatNo })" data-formated-id="@formatedID" class="btn btn-xs btn-default delete">Delete <img src="~/Images/ajax/LoadingCircle.gif" class="hide-loader" id="img_@formatedID" width="20" height="20" /></a>
+        </td>
+    </tr>
+}
+
+</table>
+
+@section Scripts{
+    <script src="~/Scripts/AppScripts/Candidate.js"></script>
+    }

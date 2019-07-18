@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="Content/bootstrap.css">
+    <link href="css/font-awesome.css" rel="stylesheet" />
+    <link href="Content/voteDesign.css" rel="stylesheet" />
+</head>
+<body>
+
+<h2>Click on the category of election to reaveal the candidates:</h2>
+<div>
+    <button onclick="PresFunction()">Presidential Election</button>
+
+    <div id="preshide" >
+   
+    <h2 style="text-align:center">Candidate Profile Card</h2>
+
+     <div class="container">
+          <div class="row">
+            <div class="col-sm-4">
+                <div class="prfl" >
+            <img src="pic.jpg" alt="John" style="width:100%">
+            <h1>Arron Okafor</h1>
+            <p class="prfltitle">Presidential Candidate</p>
+            <p>Brief Manifesto</p>
+            <p><button>Vote</button></p>
+        </div>
+            </div>
+            <div class="col-sm-4">
+               <div class="prfl">
+        <img src="pic.jpg" alt="John" style="width:100%">
+            <h1>Arron Mosses</h1>
+            <p class="prfltitle">Presidential Candidate</p>
+            <p>Brief Manifesto</p>
+            <p><button>Vote</button></p>
+       </div>
+            </div>
+            <div class="col-sm-4">
+                  <div class="prfl">
+        <img src="pic.jpg" alt="John" style="width:100%">
+            <h1>Arron Mosses</h1>
+            <p class="prfltitle">Presidential Candidate</p>
+            <p>Brief Manifesto</p>
+            <p><button>Vote</button></p>
+       </div>
+            </div>
+          </div>
+      
+
+      
+
+   
+     </div>
+
+    </div>
+</div>
+
+<div>
+    <button onclick="VpFunction()">Vice Presidential Election</button>
+
+    <div id="vphide" >
+   
+    <h2 style="text-align:center">Candidate Profile Card</h2>
+
+     <div class="container">
+          <div class="row">
+            <div class="col-sm-4">
+                <div class="prfl" >
+            <img src="pic.jpg" alt="John" style="width:100%">
+            <h1>Arron Okafor</h1>
+            <p class="prfltitle">Vice Presidential Candidate</p>
+            <p>Brief Manifesto</p>
+            <p><button>Vote</button></p>
+        </div>
+            </div>
+            <div class="col-sm-4">
+               <div class="prfl">
+        <img src="pic.jpg" alt="John" style="width:100%">
+            <h1>Arron Mosses</h1>
+            <p class="prfltitle">Vice Presidential Candidate</p>
+            <p>Brief Manifesto</p>
+            <p><button>Vote</button></p>
+       </div>
+            </div>
+            <div class="col-sm-4">
+                  <div class="prfl">
+        <img src="pic.jpg" alt="John" style="width:100%">
+            <h1>Arron Mosses</h1>
+            <p class="prfltitle">Vice Presidential Candidate</p>
+            <p>Brief Manifesto</p>
+            <p><button>Vote</button></p>
+       </div>
+            </div>
+          </div>
+      
+
+      
+
+   
+     </div>
+
+    </div>
+    </div>
+<!-- Secretary code -->
+<div>
+    <button onclick="SecFunction()">Secretary Election</button>
+
+    <div id="sechide" >
+   
+    <h2 style="text-align:center">Candidate Profile Card</h2>
+
+     <div class="container">
+          <div class="row">
+            <div class="col-sm-4">
+                <div class="prfl" >
+            <img src="pic.jpg" alt="John" style="width:100%">
+            <h1>Arron Okafor</h1>
+            <p class="prfltitle">Candidate Profile Card</p>
+            <p>Brief Manifesto</p>
+            <p><button>Vote</button></p>
+        </div>
+            </div>
+            <div class="col-sm-4">
+               <div class="prfl">
+        <img src="pic.jpg" alt="John" style="width:100%">
+            <h1>Arron Mosses</h1>
+            <p class="prfltitle">Candidate Profile Card</p>
+            <p>Brief Manifesto</p>
+            <p><button>Vote</button></p>
+       </div>
+            </div>
+            <div class="col-sm-4">
+                  <div class="prfl">
+        <img src="pic.jpg" alt="John" style="width:100%">
+            <h1>Arron Mosses</h1>
+            <p class="prfltitle">Candidate Profile Card</p>
+            <p>Brief Manifesto</p>
+            <p><button>Vote</button></p>
+       </div>
+            </div>
+          </div>
+      
+
+      
+
+   
+     </div>
+
+    </div>
+    </div>
+
+
+<!--Sctripts -->
+<script>
+function PresFunction() {
+    var x = document.getElementById("preshide");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+</script>
+
+
+<script>
+function VpFunction() {
+    var x = document.getElementById("vphide");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+</script>
+
+<script>
+function SecFunction() {
+    var x = document.getElementById("sechide");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+</script>
+
+ <script src="js/bootstrap.min.js"></script>
+</body>
+</html>

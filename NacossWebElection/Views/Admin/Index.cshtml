@@ -1,0 +1,101 @@
+﻿@model IEnumerable<NacossWebElection.Models.DBModel.CandidateVoteCount>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var db = new NacossWebElection.Models.DBModel.NacossVotingDBEntities();
+}
+<div class="row">
+    <div class="col-md-3 dash-item">
+      <p>Voters  <span class="label label-success"> @db.Voters.Count()</span></p>   
+        <a href="@Url.Action("voters")">Manage Voters</a>
+    </div>
+    <div class="col-md-3 dash-item">
+      <p>Candidates <span class="label label-success"> @db.Candidates.Count()</span></p>  
+        <a href="@Url.Action("AddCandidate")">Manage Canidates</a>
+    </div>
+    <div class="col-md-3 dash-item">
+       <p>Positions   <span class="label label-success">@db.Positions.Count()</span></p> 
+        <a href="@Url.Action("position")" >Manage Position</a>
+    </div>
+    <div class="col-md-3 dash-item">
+        <p>Users  <span class="label label-success">@db.Users.Count()</span></p>
+        <a href="@Url.Action("Users")">Users</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h1>Result Summary</h1>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-6">
+       <h2> <i class="fa fa-bell"> </i> Top 2 Winners  </h2> 
+   
+            @foreach (var p in db.Positions)
+            {
+
+                <div class="topviewers">
+
+                    <h3>@p.Position1</h3>
+                     @if(Model == null)
+                     {
+                        
+                     }
+                     
+                    @foreach (var a in Model)
+                    {
+                        
+                    if(a.Candidate.Position1.Position1 == p.Position1)
+                    {
+                    <div class="candi-view"><p>@a.Candidate.FirstName @a.Candidate.LastName<span>@a.NoOfVotes votes</span> </p>   </div>
+                        }
+                      
+
+                    }
+                </div>
+            }
+
+        
+    </div>
+    <div class="col-md-6">
+       <h2><i class="fa-list"></i> Result  Board</h2> 
+      <div class="scroll-table">
+
+          <table class="table table-responsive table-hover table-condensed">
+              <thead>
+                  <tr>
+                      <th>Position</th>
+                      <th>Candidate</th>
+                      <th>Number of votes</th>
+                      <th>Mat no</th>
+                  </tr>
+                  @if (Model != null)
+                  {
+                    foreach (var i in Model)
+                    {
+                        <tr colspan ="4">
+                            <td>@i.Candidate.Position1.Position1</td>
+                            <td>@i.Candidate.FirstName @i.Candidate.LastName</td>
+                            <td>@i.NoOfVotes.ToString()</td>
+                            <td>@i.CandidateMatNo</td>
+                        </tr>
+                      }
+
+                  }
+                  else
+                  {
+                    <tr colspan="4">
+                        <td>No Result found</td>
+                    </tr>
+                  }
+
+              </thead>
+          </table>
+      </div>
+    </div>
+    
+
+
+</div>
+
